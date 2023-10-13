@@ -8,10 +8,15 @@ import org.java.app.db.pojo.Pizza;
 import org.java.app.db.serv.IngredienteService;
 import org.java.app.db.serv.OffertaService;
 import org.java.app.db.serv.PizzaService;
+import org.java.app.mvc.auth.pojo.Role;
+import org.java.app.mvc.auth.pojo.User;
+import org.java.app.mvc.auth.serv.RoleServ;
+import org.java.app.mvc.auth.serv.UserServ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
@@ -29,6 +34,12 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 	
 	@Autowired
 	private IngredienteService ingredienteService;
+	
+	@Autowired
+	private RoleServ roleServ;
+	
+	@Autowired
+	private UserServ userServ;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -64,5 +75,20 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		ingredienteService.save(ingrediente3);
 		ingredienteService.save(ingrediente4);
 		ingredienteService.save(ingrediente5);
+		
+		Role admin = new Role("ADMIN");
+		Role user = new Role("USER");
+		
+		roleServ.save(admin);
+		roleServ.save(user);
+		
+		final String pass1 = new BCryptPasswordEncoder().encode("1234");
+		final String pass2 = new BCryptPasswordEncoder().encode("5678");
+		
+		User userAdmin = new User("admin", pass1, admin, user);
+		User userUser = new User("user", pass2, user);
+		
+		userServ.save(userAdmin);
+		userServ.save(userUser);
 	}
 }
