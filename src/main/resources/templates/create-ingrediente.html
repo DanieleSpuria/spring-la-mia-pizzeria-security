@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<title>Nuovo ingrediente</title>
+</head>
+<body>
+
+	<div 
+		th:object="${ingrediente}"
+		class="container d-flex flex-column align-items-center py-5"	
+	>
+		
+		<h2>Nuovo ingrediente</h2>
+		
+		<form
+			method="post"
+		>
+			
+			<label>Nome</label>
+			<input type="text" name="nome" th:field="*{nome}">
+			
+			<span class="py-3">Seleziona pizze a cui aggiungere il nuovo ingrediente:</span>
+			
+			<div 
+				th:each="pizza : ${pizze}"
+				th:object="${pizza}"
+			>
+			
+				<input 
+					type="checkbox"
+					th:id="*{id}"
+					th:value="*{id}"
+					th:field="${ingrediente.pizze}"
+				>
+				<label 
+					th:for="*{id}"
+					class="d-inline"
+				>[[*{nome}]]</label>
+				
+			</div>
+			
+			<button class="btn btn-primary my-3" type="submit">Crea</button>
+			
+		</form>
+	
+	</div>
+
+</body>
+</html>

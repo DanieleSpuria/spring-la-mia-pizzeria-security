@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<title>[[${{pizza.nome}}]]</title>
+</head>
+<body class="container d-flex justify-content-center flex-wrap">
+	
+	<div th:object="${pizza}" class="container d-flex align-items-center flex-column m-5 border border-dark rounded">
+		
+		<h2 class="py-2">[[*{nome}]]</h2>
+		<span>Prezzo: [[*{prezzo}]] €</span>
+		<span class="py-1">Descrizione: [[*{descrizione}]]</span>
+		<img th:src="@{*{foto}}" class="mb-4"/>
+		
+		
+		<div class="d-flex flex-column align-items-center border-top border-bottom border-dark w-100 ">
+			<h5 class="mt-4 mb-2">Ingredienti:</h5>
+			<ul class="p-0">
+				<li 
+					th:each="ingrediente : ${pizza.ingredienti}"
+					th:object="${ingrediente}"
+					class="d-flex justify-content-between align-items-center"
+				>
+					<span class="d-inline">[[*{nome}]]</span>
+					
+					<div class="d-flex my-2">
+						<a th:href="@{#}" class="btn btn-warning mx-2">Modifica</a>
+						<form th:action="@{#}" class="d-inline">
+							<button class="btn btn-danger">Elimina</button>
+						</form>					
+					</div>
+				</li>
+			</ul>
+			
+			<a th:href="@{#}" class="btn btn-secondary mt-2 mb-4">Aggiungi nuovo ingrediente</a>
+		</div>
+		
+		
+		<div class="d-flex flex-column align-items-center border-bottom border-dark w-100">
+			<h4 class="pt-4 pb-2" th:if="*{offerte.size() > 0}">Offerte!</h4>
+			<span th:each="offerta : *{offerte}" th:object="${offerta}">[[*{titolo}]]</span>
+						
+			<a th:href="@{/offerta/{id} (id = *{id})}" class="btn btn-secondary mt-2 mb-4">Aggiungi nuova offerta</a>
+		</div>
+		
+		<a 
+	  		th:href="@{/}"
+  	    	class="my-4 btn btn-primary">
+				Home
+		</a>
+		
+	</div>
+	
+</body>
+</html>

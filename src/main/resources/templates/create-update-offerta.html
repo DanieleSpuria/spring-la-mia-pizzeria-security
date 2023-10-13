@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<title>Insert title here</title>
+</head>
+<body>
+
+	<div class="container d-flex flex-column align-items-center py-5 text-center">
+		<h2 class="py-2">Offerta per [[${pizza.nome}]]</h2>
+
+		<form 
+			th:object="${offerta}" 
+			method="POST"
+			class="d-flex flex-column"
+			>
+			
+			<div>
+				<label>Data di inizio</label>
+				<input type="date" th:field="*{inizio}">
+				
+				<ul th:if="${#fields.hasErrors('inizio')}">
+					<li th:each="err : ${#fields.errors('inizio')}" th:text="${err}"></li>
+				</ul>				
+			</div>
+			
+			<div>
+				<label>Data di fine</label>
+				<input type="date" th:field="*{fine}">			
+				
+				<ul th:if="${#fields.hasErrors('fine')}">
+					<li th:each="err : ${#fields.errors('fine')}" th:text="${err}"></li>
+				</ul>	
+			</div>
+
+			<div>
+				<label>Titolo</label>
+				<input type="text" th:field="*{titolo}">	
+				
+				<ul th:if="${#fields.hasErrors('titolo')}">
+					<li th:each="err : ${#fields.errors('titolo')}" th:text="${err}"></li>
+				</ul>			
+			</div>
+
+			<button type="submit" class="btn btn-primary my-3">Invia</button>
+		</form>
+	</div>
+
+</body>
+</html>

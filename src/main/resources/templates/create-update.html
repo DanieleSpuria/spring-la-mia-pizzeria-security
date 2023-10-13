@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<title>Nuova pizza</title>
+</head>
+<body class="d-flex align-items-center text-center flex-column">
+	
+	<h2 class="pt-5">Inserire dati</h2>
+	
+	<form 
+		th:object="${pizza}" 
+		method="post" class="py-3">
+		
+		<div>
+			<label for="nome">Nome</label>
+			<input type="text" name="nome" th:field="*{nome}">
+			
+			<ul th:if="${#fields.hasErrors('nome')}">
+				<li th:each="err : ${#fields.errors('nome')}" th:text="${err}"></li>
+			</ul>
+		</div>
+		
+		<div>		
+			<label for="prezzo">Prezzo</label>
+			<input type="number" name="prezzo" th:field="*{prezzo}">
+
+			<ul th:if="${#fields.hasErrors('prezzo')}">
+				<li th:each="err : ${#fields.errors('prezzo')}" th:text="${err}"></li>
+			</ul>
+		</div>
+		
+		<div>
+			<label for="descrizione">Descrizione</label>
+			<input type="text" name="descrizione" th:field="*{descrizione}">
+
+			<ul th:if="${#fields.hasErrors('descrizione')}">
+				<li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
+			</ul>
+		</div>
+
+		<div>
+			<label for="foto">Foto</label>
+			<input type="text" name="foto" th:field="*{foto}">	
+
+			<ul th:if="${#fields.hasErrors('foto')}">
+				<li th:each="err : ${#fields.errors('foto')}" th:text="${err}"></li>
+			</ul>
+		</div>
+		
+		<button type="submit" class="btn btn-primary my-3">Invia</button>
+	</form>
+</body>
+</html>
