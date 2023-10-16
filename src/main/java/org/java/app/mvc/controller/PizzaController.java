@@ -2,9 +2,12 @@ package org.java.app.mvc.controller;
 
 import java.util.List;
 
+import org.java.app.db.pojo.Ingrediente;
 import org.java.app.db.pojo.Offerta;
 import org.java.app.db.pojo.Pizza;
+import org.java.app.db.repo.OffertaRepo;
 import org.java.app.db.repo.PizzaRepo;
+import org.java.app.db.serv.IngredienteService;
 import org.java.app.db.serv.OffertaService;
 import org.java.app.db.serv.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,12 @@ public class PizzaController {
 
 	@Autowired
 	private OffertaService offertaService;
+	
+	@Autowired
+	private OffertaRepo offertaRepo;
+	
+	@Autowired
+	private IngredienteService ingredienteServ;
 
 	
 	
@@ -121,7 +130,19 @@ public class PizzaController {
 	public String delete(
 		@PathVariable Integer id) {
 
-			pizzaRepo.deleteById(id);
+			Pizza pizza = pizzaRepo.findById(id).get();
+			List <Offerta> offerte = offertaService.findAll();
+			List <Ingrediente> ingredienti = ingredienteServ.findAll();
+			
+			for (Offerta offerta : offerte) 			
+				if (offerta.getPizza().getId() == id) 
+					offertaRepo.delete(offerta);
+			
+			for (Ingrediente ingrediente : ingredienti)
+				if (ingrediente.getPizze().contains(pizza))
+					ingrediente.getPizze().remove(pizza);
+		
+			pizzaRepo.delete(pizza);
 
 			return "redirect:/";
 		}
