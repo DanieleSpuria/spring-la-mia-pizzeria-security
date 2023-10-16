@@ -17,6 +17,8 @@
 			class="d-flex flex-column"
 			>
 			
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+					
 			<div>
 				<label>Data di inizio</label>
 				<input type="date" th:field="*{inizio}">
