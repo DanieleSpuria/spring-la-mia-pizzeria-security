@@ -10,6 +10,14 @@
 	
 	<h1 class="pt-5">Pizzeria da Jama</h1>
 	
+	<h4 sec:authorize="!hasAnyAuthority('ADMIN', 'USER')">
+		<a class="btn btn-primary" href="/login">Login</a>		
+	</h4>
+	
+	<h4 sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+		<a class="btn btn-warning" href="/logout">Logout</a>				
+	</h4>
+	
 	<form action="/" method="GET" class="py-3">
 		<label>Cerca</label>
 		<input type="text" name="nome" th:value="${nome}">
@@ -26,13 +34,18 @@
 					</span>
 					
 					<div class= d-flex>
-						<button class="btn btn-secondary">
-							<a th:href="@{/edit/{id} (id = *{id})}">Modifica</a>
+						<button 
+							class="btn btn-secondary"
+							sec:authorize="hasAnyAuthority('ADMIN')"	
+						>
+								<a th:href="@{/edit/{id} (id = *{id})}">Modifica</a>
 						</button>
 
 						<form class="px-1"
 							th:action="@{/delete/{id} (id = *{id})}"
-							method="post">
+							method="post"
+							sec:authorize="hasAnyAuthority('ADMIN')"
+						>
 								<button
 									th:id="'delete-' + *{id}"	
 									class="btn btn-danger" 
@@ -49,11 +62,13 @@
 		<a 
 			th:href="@{/create-update}"
 			class="btn btn-primary"
+			sec:authorize="hasAnyAuthority('ADMIN')"
 		>Nuova pizza</a>
 		
 			<a 
 			th:href="@{/ingredienti}"
 			class="ms-3 btn btn-secondary"
+			sec:authorize="hasAnyAuthority('ADMIN')"
 		>Ingredienti</a>		
 	</div>
 	

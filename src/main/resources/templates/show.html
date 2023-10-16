@@ -26,7 +26,10 @@
 				>
 					<span class="d-inline">[[*{nome}]]</span>
 					
-					<div class="d-flex my-2">
+					<div 
+						class="d-flex my-2"
+						sec:authorize="hasAnyAuthority('ADMIN')"
+					>
 						<a th:href="@{#}" class="btn btn-warning mx-2">Modifica</a>
 						<form th:action="@{#}" class="d-inline">
 							<button class="btn btn-danger">Elimina</button>
@@ -35,15 +38,27 @@
 				</li>
 			</ul>
 			
-			<a th:href="@{#}" class="btn btn-secondary mt-2 mb-4">Aggiungi nuovo ingrediente</a>
+			<a 
+				th:href="@{#}" 	
+				class="btn btn-secondary mt-2 mb-4"	
+				sec:authorize="hasAnyAuthority('ADMIN')"
+			>Aggiungi nuovo ingrediente</a>
 		</div>
 		
 		
 		<div class="d-flex flex-column align-items-center border-bottom border-dark w-100">
 			<h4 class="pt-4 pb-2" th:if="*{offerte.size() > 0}">Offerte!</h4>
-			<span th:each="offerta : *{offerte}" th:object="${offerta}">[[*{titolo}]]</span>
+			<span 
+				th:each="offerta : *{offerte}" 
+				th:object="${offerta}"
+				class="pb-3"
+			>[[*{titolo}]]</span>
 						
-			<a th:href="@{/offerta/{id} (id = *{id})}" class="btn btn-secondary mt-2 mb-4">Aggiungi nuova offerta</a>
+			<a 
+				th:href="@{/offerta/{id} (id = *{id})}" 
+				class="btn btn-secondary mt-2 mb-4"
+				sec:authorize="hasAnyAuthority('ADMIN')"
+			>Aggiungi nuova offerta</a>
 		</div>
 		
 		<a 

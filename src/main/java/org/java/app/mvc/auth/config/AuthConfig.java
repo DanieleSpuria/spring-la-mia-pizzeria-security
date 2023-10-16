@@ -26,7 +26,7 @@ public class AuthConfig {
 			.requestMatchers("/ingredienti/**").hasAuthority("ADMIN")
 			.requestMatchers("/**").permitAll()
 			.and().formLogin()
-			.and().logout();
+			.and().logout().logoutSuccessUrl("/");
 		
 		return http.build();
 	}
